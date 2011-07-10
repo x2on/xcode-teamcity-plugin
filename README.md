@@ -5,6 +5,9 @@ This is a plugin for the Continuous Integration server [TeamCity](http://www.jet
 
 Installation
 ------------
+### Prepare
+
+Run the commands listed in `importPackages.sh` in your `TeamCity/devPackage` folder to import the needed jars.
 
 ### Server
 
