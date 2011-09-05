@@ -4,4 +4,5 @@
 
 <beans default-autowire="constructor">
   <bean id="xcodeRunType" class="de.felixschulze.teamcity.xcode.runner.XcodeRunType"/>
+  <bean id="clangRunType" class="de.felixschulze.teamcity.xcode.runner.ClangRunType"/>
 </beans>

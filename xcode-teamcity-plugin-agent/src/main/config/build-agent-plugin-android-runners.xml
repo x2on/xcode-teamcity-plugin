@@ -4,4 +4,6 @@
 
 <beans default-autowire="constructor">
   <bean id="xcodeBuildRunner" class="de.felixschulze.teamcity.xcode.XcodeBuildRunner"/>
+  <bean id="clangBuildRunner" class="de.felixschulze.teamcity.xcode.ClangBuildRunner"/>
+
 </beans>

@@ -5,7 +5,7 @@
 
     <groupId>de.felixschulze.teamcity</groupId>
     <artifactId>xcode-teamcity-plugin-agent</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>xcode-teamcity-plugin-agent</name>
@@ -32,7 +32,7 @@
     <parent>
         <groupId>de.felixschulze.teamcity</groupId>
         <artifactId>xcode-teamcity-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </parent>
 
     <build>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>de.felixschulze.teamcity</groupId>
             <artifactId>xcode-teamcity-plugin-common</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
         <dependency>
