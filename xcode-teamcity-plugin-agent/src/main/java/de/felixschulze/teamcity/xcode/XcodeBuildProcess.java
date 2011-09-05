@@ -52,6 +52,9 @@ public class XcodeBuildProcess extends CallableBuildProcess {
 
         final Boolean clean = Boolean.parseBoolean(getParameter(XcodeConstants.PARAM_CLEAN, false));
 
+        final Boolean ignoreUnitTests = Boolean.parseBoolean(getParameter(XcodeConstants.PARAM_IGNOREUNITESTS, false));
+
+
         if (clean) {
             logger.targetStarted("clean");
             File buildDirectory = new File(context.getWorkingDirectory(), "build");
@@ -63,7 +66,7 @@ public class XcodeBuildProcess extends CallableBuildProcess {
 
         final long startTime = System.currentTimeMillis();
 
-        if (buildXcodeProject(projectFile, target, configuration, sdk, clean)) {
+        if (buildXcodeProject(projectFile, target, configuration, sdk, ignoreUnitTests)) {
             final long endTime = System.currentTimeMillis();
             logger.message("Build finished (took " + ((endTime - startTime) / 1000) + " seconds)");
             logger.targetFinished("Xcode build");
@@ -90,12 +93,12 @@ public class XcodeBuildProcess extends CallableBuildProcess {
         return new File(value).isAbsolute() ? value : new File(context.getBuild().getCheckoutDirectory(), value).getAbsolutePath();
     }
 
-    private boolean buildXcodeProject(String projectFile, String target, String configuration, String sdk, Boolean clean) {
+    private boolean buildXcodeProject(String projectFile, String target, String configuration, String sdk, Boolean ignoreUnitTests) {
         final BuildProgressLogger logger = build.getBuildLogger();
 
         logger.targetStarted("xcodebuild");
 
-        XcodeBuildTool buildTool = new XcodeBuildTool(context);
+        XcodeBuildTool buildTool = new XcodeBuildTool(context, ignoreUnitTests);
 
 
         final List<String> argsAfter = new ArrayList<String>();
@@ -122,6 +125,5 @@ public class XcodeBuildProcess extends CallableBuildProcess {
         logger.targetFinished("xcodebuild");
         return true;
     }
-
 
 }

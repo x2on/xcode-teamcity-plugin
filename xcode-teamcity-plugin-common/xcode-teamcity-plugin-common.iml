@@ -9,9 +9,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:annotations:6.0.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:agent-api:6.0.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:agent:6.0.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:annotations:6.5.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:agent-api:6.5.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:agent:6.5.3" level="project" />
   </component>
 </module>
 

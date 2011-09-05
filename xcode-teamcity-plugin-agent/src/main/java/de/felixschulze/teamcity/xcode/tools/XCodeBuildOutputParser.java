@@ -36,48 +36,64 @@ public class XCodeBuildOutputParser {
     private static Pattern ERROR_TESTCASE = Pattern.compile("(.*): error: -\\[(\\S+) (\\S+)\\] : (.*)", Pattern.DOTALL);
     private static Pattern FAILED_TESTCASE = Pattern.compile("Test Case '-\\[\\S+ (\\S+)\\]' failed \\((\\S+) seconds\\).(.*)", Pattern.DOTALL);
 
-    private final BuildProgressLogger buildListener;
+    private static Pattern LINE_COVERAGE = Pattern.compile("lines......: ([0-9]*.[0-9])*% \\(([0-9]*) of ([0-9]*) lines\\)(.*)", Pattern.DOTALL);
 
-    public XCodeBuildOutputParser(BuildProgressLogger buildListener) {
+    private final BuildProgressLogger buildListener;
+    private final Boolean ignoreUnitTests;
+
+    public XCodeBuildOutputParser(BuildProgressLogger buildListener, Boolean ignoreUnitTests) {
         this.buildListener = buildListener;
+        this.ignoreUnitTests = ignoreUnitTests;
     }
 
     protected void handleLine(String line) {
+        Matcher m;
+        if (!ignoreUnitTests) {
+            m = START_SUITE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testSuiteStarted name='" + m.group(1) + "']");
+                return;
+            }
 
-        Matcher m = START_SUITE.matcher(line);
+            m = END_SUITE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testSuiteFinished name='" + m.group(1) + "']");
+                return;
+            }
+
+            m = START_TESTCASE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testStarted name='" + m.group(1) + "']");
+                return;
+            }
+
+            m = END_TESTCASE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testFinished name='" + m.group(1) + "' duration='" + m.group(2) + "']");
+                return;
+            }
+
+            m = ERROR_TESTCASE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testFailed name='" + m.group(3) + "' message='" + m.group(4) + "']");
+                return;
+            }
+
+            m = FAILED_TESTCASE.matcher(line);
+            if (m.matches()) {
+                buildListener.message("##teamcity[testFailed name='" + m.group(1) + "' duration='" + m.group(2) + "']");
+                return;
+            }
+        }
+
+        m = LINE_COVERAGE.matcher(line);
         if (m.matches()) {
-            buildListener.message("##teamcity[testSuiteStarted name='" + m.group(1) + "']");
+            buildListener.message("##teamcity[buildStatisticValue key='CodeCoverageL' value='"+m.group(1)+"']");
+            buildListener.message("##teamcity[buildStatisticValue key='CodeCoverageAbsLCovered' value='"+m.group(1)+"']");
+            buildListener.message("##teamcity[buildStatisticValue key='CodeCoverageAbsLTotal' value='"+m.group(3)+"']");
             return;
         }
 
-        m = END_SUITE.matcher(line);
-        if (m.matches()) {
-            buildListener.message("##teamcity[testSuiteFinished name='" + m.group(1) + "']");
-            return;
-        }
 
-        m = START_TESTCASE.matcher(line);
-        if (m.matches()) {
-            buildListener.message("##teamcity[testStarted name='" + m.group(1) + "']");
-            return;
-        }
-
-        m = END_TESTCASE.matcher(line);
-        if (m.matches()) {
-            buildListener.message("##teamcity[testFinished name='" + m.group(1) + "' duration='" + m.group(2) + "']");
-            return;
-        }
-
-        m = ERROR_TESTCASE.matcher(line);
-        if (m.matches()) {
-            buildListener.message("##teamcity[testFailed name='" + m.group(3) + "' message='" + m.group(4) + "']");
-            return;
-        }
-
-        m = FAILED_TESTCASE.matcher(line);
-        if (m.matches()) {
-            buildListener.message("##teamcity[testFailed name='" + m.group(1) + "' duration='" + m.group(2) + "']");
-            return;
-        }
     }
 }

@@ -19,7 +19,6 @@ package de.felixschulze.teamcity.xcode.tools;
 import com.intellij.execution.ExecutionException;
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,8 +33,6 @@ import jetbrains.buildServer.agent.BuildProgressLogger;
 import jetbrains.buildServer.agent.BuildRunnerContext;
 import org.jetbrains.annotations.NotNull;
 
-import javax.xml.bind.JAXBException;
-
 public class XcodeBuildTool {
 
     @NotNull
@@ -44,9 +41,12 @@ public class XcodeBuildTool {
     @NotNull
     private final BuildRunnerContext context;
 
-    public XcodeBuildTool(@NotNull final BuildRunnerContext context) {
+    private final Boolean ignoreUnitTests;
+
+    public XcodeBuildTool(@NotNull final BuildRunnerContext context, Boolean ignoreUnitTests) {
         this.toolPath = "/usr/bin/xcodebuild";
         this.context = context;
+        this.ignoreUnitTests = ignoreUnitTests;
     }
 
     @NotNull
@@ -68,7 +68,7 @@ public class XcodeBuildTool {
 
         final BuildProgressLogger logger = context.getBuild().getBuildLogger();
 
-        final XCodeBuildOutputParser outputParser = new XCodeBuildOutputParser(logger);
+        final XCodeBuildOutputParser outputParser = new XCodeBuildOutputParser(logger, ignoreUnitTests);
 
         logger.message("Executing command: " + commandLine.getCommandLineString());
 

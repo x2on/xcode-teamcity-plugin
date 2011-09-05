@@ -51,6 +51,10 @@ public interface XcodeConstants {
 
     @NonNls
     @NotNull
+    String PARAM_IGNOREUNITESTS = "ignoreunittests";
+
+    @NonNls
+    @NotNull
     String RUNNER_DISPLAY_NAME = "Xcode";
 
     @NonNls

@@ -71,6 +71,14 @@
             <props:checkboxProperty name="clean"/>
         </td>
     </tr>
+        <tr>
+        <th>
+            <label for="ignoreunittests">Ignore Unit-Tests Logging:</label>
+        </th>
+        <td>
+            <props:checkboxProperty name="ignoreunittests"/>
+        </td>
+    </tr>
 
 </l:settingsGroup>
 

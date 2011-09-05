@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="fileset1" name="My Fileset" removed="false">
-          <file>file://$MODULE_DIR$/src/main/config/build-server-plugin-android-runners.xml</file>
-        </fileset>
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -22,9 +13,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="xcode-teamcity-plugin-common" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:server-api:6.0.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:common-api:6.0.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:annotations:6.0.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:server-api:6.5.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:common-api:6.5.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.jetbrains.teamcity:annotations:6.5.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-webmvc:2.5.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-beans:2.5.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-core:2.5.6" level="project" />
