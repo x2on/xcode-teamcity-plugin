@@ -56,12 +56,7 @@ public class XcodeBuildProcess extends CallableBuildProcess {
 
 
         if (clean) {
-            logger.targetStarted("clean");
-            File buildDirectory = new File(context.getWorkingDirectory(), "build");
-            logger.message("Clean dir: "+buildDirectory.getAbsolutePath());
-            FileUtils.deleteDirectory(buildDirectory);
-            logger.targetFinished("clean");
-
+            cleanXcodeProject(projectFile, target, configuration);
         }
 
         final long startTime = System.currentTimeMillis();
@@ -94,12 +89,6 @@ public class XcodeBuildProcess extends CallableBuildProcess {
     }
 
     private boolean buildXcodeProject(String projectFile, String target, String configuration, String sdk, Boolean ignoreUnitTests) {
-        final BuildProgressLogger logger = build.getBuildLogger();
-
-        logger.targetStarted("xcodebuild");
-
-        XcodeBuildTool buildTool = new XcodeBuildTool(context, ignoreUnitTests);
-
 
         final List<String> argsAfter = new ArrayList<String>();
         argsAfter.add("-project");
@@ -110,6 +99,30 @@ public class XcodeBuildProcess extends CallableBuildProcess {
         argsAfter.add(configuration);
         argsAfter.add("-sdk");
         argsAfter.add(sdk);
+
+        return executeXcodeBuild("xcodebuild", argsAfter, ignoreUnitTests);
+    }
+
+     private boolean cleanXcodeProject(String projectFile, String target, String configuration) {
+
+        final List<String> argsAfter = new ArrayList<String>();
+        argsAfter.add("clean");
+        argsAfter.add("-project");
+        argsAfter.add(projectFile);
+        argsAfter.add("-target");
+        argsAfter.add(target);
+        argsAfter.add("-configuration");
+        argsAfter.add(configuration);
+
+        return executeXcodeBuild("clean", argsAfter, true);
+     }
+
+    private boolean executeXcodeBuild(String loggername, List<String> argsAfter, Boolean ignoreUnitTests) {
+
+        final BuildProgressLogger logger = build.getBuildLogger();
+        logger.targetStarted(loggername);
+
+        XcodeBuildTool buildTool = new XcodeBuildTool(context, ignoreUnitTests);
 
         try {
             buildTool.xcodeBuildExecute(argsAfter);
@@ -122,7 +135,7 @@ public class XcodeBuildProcess extends CallableBuildProcess {
         } catch (NonZeroExitCodeException e) {
             return false;
         }
-        logger.targetFinished("xcodebuild");
+        logger.targetFinished(loggername);
         return true;
     }
 

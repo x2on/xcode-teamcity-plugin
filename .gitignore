@@ -2,3 +2,5 @@
 .idea
 *.tar.gz
 **/target
+*.iws
+*.ipr
